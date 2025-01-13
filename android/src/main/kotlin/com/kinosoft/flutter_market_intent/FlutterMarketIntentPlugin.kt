@@ -69,10 +69,10 @@ class FlutterMarketIntentPlugin: FlutterPlugin, MethodCallHandler {
     } else if (call.method == "startIntent") {
 
       val intent: String = call.argument("intent") ?: ""
-      val i = Intent.parseUri(intent, Intent.URI_INTENT_SCHEME);
+      val i = Intent.parseUri(intent, Intent.URI_INTENT_SCHEME)
 
       if (i.resolveActivity(context.packageManager) != null) {
-        val existPackage = context.packageManager.getLaunchIntentForPackage("" + i.`package`)
+        val existPackage = context.packageManager.getLaunchIntentForPackage(i.`package`)
         context.startActivity(i)
         result.success(null)
       } else {
