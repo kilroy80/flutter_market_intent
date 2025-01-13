@@ -55,7 +55,7 @@ class FlutterMarketIntentPlugin: FlutterPlugin, MethodCallHandler {
 
     } else if (call.method == "parseIntent") {
 
-      val intent: String? = call.argument("intent")
+      val intent: String = call.argument("intent") ?: ""
       val i = Intent.parseUri(intent, Intent.URI_INTENT_SCHEME)
 
       val hashMap = HashMap<String, Any>()
@@ -65,6 +65,20 @@ class FlutterMarketIntentPlugin: FlutterPlugin, MethodCallHandler {
       hashMap["package"] = i.`package` ?: ""
 
       result.success(hashMap)
+
+    } else if (call.method == "startIntent") {
+
+      val intent: String = call.argument("intent") ?: ""
+      val i = Intent.parseUri(intent, Intent.URI_INTENT_SCHEME);
+
+      if (i.resolveActivity(context.packageManager) != null) {
+        val existPackage = context.packageManager.getLaunchIntentForPackage("" + i.`package`)
+        context.startActivity(i)
+        result.success(null)
+      } else {
+        val fallbackUrl = i.getStringExtra("browser_fallback_url") ?: ""
+        result.success(fallbackUrl)
+      }
 
     } else {
       result.notImplemented()

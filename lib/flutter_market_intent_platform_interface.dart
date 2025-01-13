@@ -36,4 +36,8 @@ abstract class FlutterMarketIntentPlatform extends PlatformInterface {
   Future<IntentDataModel> parseIntent(BuildContext context, String intent) {
     throw UnimplementedError('parseIntent() has not been implemented.');
   }
+
+  Future<String?> startIntent(BuildContext context, String intent) {
+    throw UnimplementedError('startIntent() has not been implemented.');
+  }
 }

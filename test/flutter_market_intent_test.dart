@@ -23,6 +23,11 @@ class MockFlutterMarketIntentPlatform
   Future<IntentDataModel> parseIntent(BuildContext context, String intent) {
     throw UnimplementedError();
   }
+
+  @override
+  Future<String?> startIntent(BuildContext context, String intent) {
+    throw UnimplementedError();
+  }
 }
 
 void main() {

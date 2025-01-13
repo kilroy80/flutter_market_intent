@@ -46,4 +46,13 @@ class MethodChannelFlutterMarketIntent extends FlutterMarketIntentPlatform {
     }
     return IntentDataModel.empty();
   }
+
+  @override
+  Future<String?> startIntent(BuildContext context, String intent) async {
+    if (Platform.isAndroid) {
+      return await methodChannel.invokeMethod('startIntent', {
+        'intent': intent
+      });
+    }
+  }
 }
