@@ -71,14 +71,16 @@ class FlutterMarketIntentPlugin: FlutterPlugin, MethodCallHandler {
       val intent: String = call.argument("intent") ?: ""
       val i = Intent.parseUri(intent, Intent.URI_INTENT_SCHEME)
 
-//      if (i.resolveActivity(context.packageManager) != null) {
-//        val existPackage = context.packageManager.getLaunchIntentForPackage(i.`package`)
-//        context.startActivity(i)
-//        result.success(null)
-//      } else {
+      try {
+        val existPackage = context.packageManager.getLaunchIntentForPackage(i.`package` ?: "")
+        if (existPackage != null) {
+          context.startActivity(i)
+          result.success(null)
+        }
+      } catch (e: Exception) {
         val fallbackUrl = i.getStringExtra("browser_fallback_url") ?: ""
         result.success(fallbackUrl)
-//      }
+      }
 
     } else {
       result.notImplemented()
